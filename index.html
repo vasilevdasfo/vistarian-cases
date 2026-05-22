@@ -99,25 +99,114 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:v
 
   <section>
     <h2>Схема движения средств</h2>
-    <div class="card flow">
-      <div class="frow">
-        <div class="node src"><div class="t">Источники (внутр. адреса + кошелёк владельца)</div><div class="v">11–14 мая</div></div>
+    <div class="card" style="overflow-x:auto">
+      <svg viewBox="0 0 1080 460" width="1080" style="max-width:100%;min-width:760px;height:auto;font-family:Inter,-apple-system,sans-serif" role="img" aria-label="Граф движения средств">
+        <defs>
+          <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#6a7a93"/>
+          </marker>
+          <style>
+            .nb{rx:9;stroke-width:1.5}
+            .addr{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;fill:#9aa8bd}
+            .amt{font-size:13px;font-weight:700;fill:#eef4ff}
+            .lbl{font-size:10.5px;fill:#e8c44a;font-weight:600}
+            .hdr{font-size:10px;fill:#7d8aa0;letter-spacing:.12em;font-weight:700}
+            .meta{font-size:9.5px;fill:#c99}
+            .edge{fill:none;stroke:#3a4a63;stroke-width:1.6}
+          </style>
+        </defs>
+
+        <!-- column headers -->
+        <text class="hdr" x="103" y="16" text-anchor="middle">ИСТОЧНИКИ · 11–14.05</text>
+        <text class="hdr" x="390" y="16" text-anchor="middle">СБОРНЫЕ</text>
+        <text class="hdr" x="675" y="16" text-anchor="middle">ВЫВОД · 16.05</text>
+        <text class="hdr" x="961" y="16" text-anchor="middle">КОНЕЧНЫЙ УЗЕЛ</text>
+
+        <!-- edges: sources -> collectors -->
+        <path class="edge" marker-end="url(#ah)" d="M198,51 C243,51 255,116 296,116"/>
+        <path class="edge" marker-end="url(#ah)" d="M198,101 C243,101 255,116 296,116"/>
+        <path class="edge" marker-end="url(#ah)" d="M198,151 C243,151 255,116 296,116"/>
+        <path class="edge" marker-end="url(#ah)" d="M198,297 C243,297 255,376 296,376"/>
+        <path class="edge" marker-end="url(#ah)" d="M198,347 C243,347 255,376 296,376"/>
+        <path class="edge" marker-end="url(#ah)" d="M198,397 C243,397 255,376 296,376"/>
+        <!-- collectors -> cashout -->
+        <path class="edge" marker-end="url(#ah)" d="M480,116 C525,116 545,110 586,110"/>
+        <path class="edge" marker-end="url(#ah)" d="M480,116 C525,116 545,190 586,190"/>
+        <path class="edge" marker-end="url(#ah)" d="M480,376 C525,376 545,370 586,370"/>
+        <!-- cashout -> convergence -->
+        <path class="edge" marker-end="url(#ah)" d="M760,110 C805,110 805,204 846,204"/>
+        <path class="edge" marker-end="url(#ah)" d="M760,190 C805,190 805,204 846,204"/>
+        <path class="edge" marker-end="url(#ah)" d="M760,370 C805,370 805,204 846,204"/>
+
+        <!-- SOURCES -->
+        <g>
+          <rect class="nb" x="8" y="30" width="190" height="42" fill="#182233" stroke="#3a4a63"/>
+          <text class="addr" x="103" y="48" text-anchor="middle">THkbjP…biV6SA</text>
+          <text class="amt"  x="103" y="65" text-anchor="middle">33 200</text>
+
+          <rect class="nb" x="8" y="80" width="190" height="42" fill="#182233" stroke="#3a4a63"/>
+          <text class="addr" x="103" y="98" text-anchor="middle">THCXpt…kdSaFL</text>
+          <text class="amt"  x="103" y="115" text-anchor="middle">147 803</text>
+
+          <rect class="nb" x="8" y="130" width="190" height="42" fill="#182233" stroke="#3a4a63"/>
+          <text class="addr" x="103" y="148" text-anchor="middle">TChy9E…4BVEaX</text>
+          <text class="amt"  x="103" y="165" text-anchor="middle">1 000</text>
+
+          <rect class="nb" x="8" y="276" width="190" height="42" fill="#1c1a10" stroke="#b8941f"/>
+          <text class="addr" x="103" y="294" text-anchor="middle">TDgG9…p5CD1u · админ-кош</text>
+          <text class="amt"  x="103" y="311" text-anchor="middle">49 975</text>
+
+          <rect class="nb" x="8" y="326" width="190" height="42" fill="#182233" stroke="#3a4a63"/>
+          <text class="addr" x="103" y="344" text-anchor="middle">TJ4pEG…Cmyqrk</text>
+          <text class="amt"  x="103" y="361" text-anchor="middle">9 512</text>
+
+          <rect class="nb" x="8" y="376" width="190" height="42" fill="#1a1316" stroke="#ff6f6f"/>
+          <text class="addr" x="103" y="394" text-anchor="middle" style="fill:#ffb3b3">TCp1…827Y4i · владелец</text>
+          <text class="amt"  x="103" y="411" text-anchor="middle">2 798</text>
+        </g>
+
+        <!-- COLLECTORS -->
+        <g>
+          <rect class="nb" x="300" y="84" width="180" height="64" fill="#1f1c10" stroke="#e8c44a"/>
+          <text class="lbl"  x="390" y="106" text-anchor="middle">СБОРНЫЙ №2</text>
+          <text class="addr" x="390" y="123" text-anchor="middle">TT6s…Xinkds</text>
+          <text class="amt"  x="390" y="141" text-anchor="middle">182 037</text>
+
+          <rect class="nb" x="300" y="344" width="180" height="64" fill="#1f1c10" stroke="#e8c44a"/>
+          <text class="lbl"  x="390" y="366" text-anchor="middle">СБОРНЫЙ №1</text>
+          <text class="addr" x="390" y="383" text-anchor="middle">TWDS…LvEAvA</text>
+          <text class="amt"  x="390" y="401" text-anchor="middle">62 300</text>
+        </g>
+
+        <!-- CASHOUT -->
+        <g>
+          <rect class="nb" x="590" y="88" width="170" height="44" fill="#1f1916" stroke="#c0884a"/>
+          <text class="addr" x="675" y="107" text-anchor="middle">TEos…JaE5V</text>
+          <text class="amt"  x="675" y="124" text-anchor="middle">50 000</text>
+
+          <rect class="nb" x="590" y="168" width="170" height="44" fill="#1f1916" stroke="#c0884a"/>
+          <text class="addr" x="675" y="187" text-anchor="middle">TG3kd…geyZG</text>
+          <text class="amt"  x="675" y="204" text-anchor="middle">132 037</text>
+
+          <rect class="nb" x="590" y="348" width="170" height="44" fill="#1f1916" stroke="#c0884a"/>
+          <text class="addr" x="675" y="367" text-anchor="middle">TMGA…p8Mq9</text>
+          <text class="amt"  x="675" y="384" text-anchor="middle">62 197</text>
+        </g>
+
+        <!-- CONVERGENCE -->
+        <g>
+          <rect class="nb" x="850" y="158" width="222" height="92" fill="#1a1316" stroke="#ff6f6f" stroke-width="2"/>
+          <text class="addr" x="961" y="186" text-anchor="middle" style="fill:#ffb3b3">TZG47…MrvF</text>
+          <text x="961" y="210" text-anchor="middle" style="font-size:17px;font-weight:800;fill:#ff8f8f">≈164 000 USDT</text>
+          <text class="meta" x="961" y="230" text-anchor="middle">OTC / обменник · баланс узла 7,26M</text>
+        </g>
+      </svg>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)">
+        <span><span style="display:inline-block;width:10px;height:10px;border:1px solid #ff6f6f;background:#1a1316;border-radius:3px;vertical-align:middle"></span> кошелёк владельца / конечный сервис</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border:1px solid #e8c44a;background:#1f1c10;border-radius:3px;vertical-align:middle"></span> сборные</span>
+        <span><span style="display:inline-block;width:10px;height:10px;border:1px solid #c0884a;background:#1f1916;border-radius:3px;vertical-align:middle"></span> вывод 16.05</span>
       </div>
-      <div class="arr">▼</div>
-      <div class="frow">
-        <div class="node collect"><div class="t mono">TWDS…LvEAvA · Промежуточный №1</div><div class="v">62 300 USDT</div></div>
-        <div class="node collect"><div class="t mono">TT6s…Xinkds · Промежуточный №2</div><div class="v">182 037 USDT</div></div>
-      </div>
-      <div class="arr">▼ &nbsp; вывод 16 мая</div>
-      <div class="frow">
-        <div class="node cash"><div class="t mono">TMGA…p8Mq9</div><div class="v">62 197</div></div>
-        <div class="node cash"><div class="t mono">TEos…JaE5V</div><div class="v">50 000</div></div>
-        <div class="node cash"><div class="t mono">TG3kd…geyZG</div><div class="v">132 037</div></div>
-      </div>
-      <div class="arr">▼ &nbsp; конвергенция</div>
-      <div class="frow">
-        <div class="node conv"><div class="t mono">TZG47zhb8kcriWQ2rE719yHs1KqgzwMrvF</div><div class="v">≈164 000 USDT · баланс узла 7,26M · OTC / обменник / nesting</div></div>
-      </div>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--muted)">Дополнительно с <span class="mono">TG3kd…</span> ушло 2×40 000 USDT на <span class="mono">TPwezU…</span> и <span class="mono">TBa4kou…</span> (далее по цепочке). Суммы на схеме = USDT.</p>
     </div>
   </section>
 
