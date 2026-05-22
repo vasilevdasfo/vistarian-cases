@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>On-chain расследование — вывод USDT (TRON)</title>
+<style>
+:root{
+  --bg:#0b1018; --panel:#121a27; --panel2:#182233; --line:#253247;
+  --text:#eef4ff; --muted:#9aa8bd; --blue:#4da3ff; --gold:#e8c44a;
+  --red:#ff6f6f; --green:#52d79a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);line-height:1.55;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;padding-bottom:60px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+
+header{padding:48px 0 28px;border-bottom:1px solid var(--line)}
+.brand{color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:700}
+h1{margin:14px 0 12px;font-size:clamp(28px,5vw,46px);line-height:1.05;letter-spacing:-.5px}
+.lead{max-width:760px;color:#cbd7e8;font-size:17px}
+.pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:600;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);margin-right:6px}
+.pill.red{color:var(--red);border-color:#553} .pill.gold{color:var(--gold)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat .n{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.stat .n.red{color:var(--red)} .stat .n.gold{color:var(--gold)} .stat .n.blue{color:var(--blue)}
+.stat .l{color:var(--muted);font-size:12.5px;margin-top:3px}
+
+section{margin:38px 0}
+h2{font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:7px;height:20px;background:var(--blue);border-radius:3px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+ul{margin:6px 0 0 18px} li{margin:5px 0}
+
+/* flow */
+.flow{display:flex;flex-direction:column;gap:10px}
+.frow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.node{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;flex:1;min-width:180px}
+.node .t{font-size:12px;color:var(--muted)} .node .v{font-weight:700;margin-top:2px}
+.node.src{border-color:#3a4a63} .node.collect{border-color:var(--gold)}
+.node.cash{border-color:#4a3a3a} .node.conv{border-color:var(--red);background:#1a1316}
+.arr{color:var(--muted);font-size:18px;text-align:center}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em}
+td.amt{font-weight:700;white-space:nowrap}
+.tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:6px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.in{color:var(--green)} .out{color:var(--red)}
+
+.rec{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rec .card h3{font-size:15px;margin-bottom:6px;color:var(--gold)}
+.rec .card p{font-size:13.5px;color:#cbd7e8}
+.note{background:#1a1316;border:1px solid #553;border-radius:12px;padding:14px 18px;color:#f0d9d9;font-size:14px}
+footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.rec{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">Vistarian Consulting · On-chain Investigation</div>
+  <h1>Несанкционированный вывод USDT в сети TRON</h1>
+  <p class="lead">Реконструкция движения средств по блокчейну: путь от компрометации кошелька до конечного сервиса, с хешами транзакций и путём для заявления.</p>
+  <div style="margin-top:16px">
+    <span class="pill red">≈244 000 USDT</span>
+    <span class="pill">TRON / USDT (TRC20)</span>
+    <span class="pill gold">on-chain анализ: 2026-05-22</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+  <div class="stats">
+    <div class="stat"><div class="n red">~244K</div><div class="l">USDT выведено (11–16 мая)</div></div>
+    <div class="stat"><div class="n gold">2</div><div class="l">промежуточных кошелька</div></div>
+    <div class="stat"><div class="n blue">1</div><div class="l">конечный узел (OTC/сервис)</div></div>
+    <div class="stat"><div class="n">11</div><div class="l">ключевых транзакций с хешами</div></div>
+  </div>
+
+  <section>
+    <h2>Ситуация</h2>
+    <div class="card">
+      <ul>
+        <li>Примерно с <b>9 мая 2026</b> доступ к устройству/аккаунтам владельца был скомпрометирован.</li>
+        <li>Средства выведены с основного кошелька и связанных адресов на <b>два промежуточных кошелька</b>, затем переведены дальше и сведены в один узел.</li>
+        <li>Основной кошелёк на момент анализа <b>пуст</b> (остатки USDT отсутствуют).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Схема движения средств</h2>
+    <div class="card flow">
+      <div class="frow">
+        <div class="node src"><div class="t">Источники (внутр. адреса + кошелёк владельца)</div><div class="v">11–14 мая</div></div>
+      </div>
+      <div class="arr">▼</div>
+      <div class="frow">
+        <div class="node collect"><div class="t mono">TWDS…LvEAvA · Промежуточный №1</div><div class="v">62 300 USDT</div></div>
+        <div class="node collect"><div class="t mono">TT6s…Xinkds · Промежуточный №2</div><div class="v">182 037 USDT</div></div>
+      </div>
+      <div class="arr">▼ &nbsp; вывод 16 мая</div>
+      <div class="frow">
+        <div class="node cash"><div class="t mono">TMGA…p8Mq9</div><div class="v">62 197</div></div>
+        <div class="node cash"><div class="t mono">TEos…JaE5V</div><div class="v">50 000</div></div>
+        <div class="node cash"><div class="t mono">TG3kd…geyZG</div><div class="v">132 037</div></div>
+      </div>
+      <div class="arr">▼ &nbsp; конвергенция</div>
+      <div class="frow">
+        <div class="node conv"><div class="t mono">TZG47zhb8kcriWQ2rE719yHs1KqgzwMrvF</div><div class="v">≈164 000 USDT · баланс узла 7,26M · OTC / обменник / nesting</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Входящие на промежуточные (11–14 мая)</h2>
+    <div class="card">
+    <table>
+      <tr><th>Дата</th><th>Сумма</th><th>Откуда</th><th>Tx</th></tr>
+      <tr><td>11.05 13:25</td><td class="amt in">33 200</td><td class="mono">THkbjP…biV6SA</td><td><a href="https://tronscan.org/#/transaction/2881ef6ffa6b03556db8f7d5e4730acc3512ee69c261091af9739b3317e9ee86" target="_blank">tx ↗</a></td></tr>
+      <tr><td>11.05 14:30</td><td class="amt in">147 803</td><td class="mono">THCXpt…kdSaFL</td><td><a href="https://tronscan.org/#/transaction/3db68cca87b3a185f882a66ecc0b111d6463b07bc67e6e93d67b90d6ae36feb1" target="_blank">tx ↗</a></td></tr>
+      <tr><td>12.05 11:27</td><td class="amt in">49 975</td><td class="mono">TDgG9Y…p5CD1u</td><td><a href="https://tronscan.org/#/transaction/98fa79e5826d9fd6a08a762c7c86a7deff8b30462d5ccb347f2ad65e542a8547" target="_blank">tx ↗</a></td></tr>
+      <tr><td>14.05 17:55</td><td class="amt in">9 512</td><td class="mono">TJ4pEG…Cmyqrk</td><td><a href="https://tronscan.org/#/transaction/b190f7db5b8307cbc72680c35c67466e0b9e35a2bdfe4d188f12c6e2f5fcd351" target="_blank">tx ↗</a></td></tr>
+      <tr><td>14.05 18:33</td><td class="amt in">2 798</td><td class="mono">TCp1…827Y4i (кош владельца)</td><td><a href="https://tronscan.org/#/transaction/f7bb412bd4095139f6113e470bd4abf6f11bfb69eaf531fc81b652e87f4284e4" target="_blank">tx ↗</a></td></tr>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Вывод с промежуточных (16 мая)</h2>
+    <div class="card">
+    <table>
+      <tr><th>Дата</th><th>Сумма</th><th>Куда</th><th>Tx</th></tr>
+      <tr><td>11:27</td><td class="amt out">25 000</td><td class="mono">TMGA…p8Mq9</td><td><a href="https://tronscan.org/#/transaction/51a5664930ab7ae4e0e555f48e6b964aa85d802bc3c2d324effabeea7746c8af" target="_blank">tx ↗</a></td></tr>
+      <tr><td>11:36</td><td class="amt out">37 197</td><td class="mono">TMGA…p8Mq9</td><td><a href="https://tronscan.org/#/transaction/81e7c2c0c6ea12ff6191f1f4e99ec00bff70b45fc263090ed75e81c83503d0e0" target="_blank">tx ↗</a></td></tr>
+      <tr><td>12:06</td><td class="amt out">50 000</td><td class="mono">TEos…JaE5V</td><td><a href="https://tronscan.org/#/transaction/e328cc196961384e3475d588888b84d592249571ba0d4ba9c57a6172b131e47d" target="_blank">tx ↗</a></td></tr>
+      <tr><td>12:22</td><td class="amt out">80 000</td><td class="mono">TG3kd…geyZG</td><td><a href="https://tronscan.org/#/transaction/f82207eb71358a74fdcae306999e7ffe22e703e0e1bdebc44f3e5e2a756c5207" target="_blank">tx ↗</a></td></tr>
+      <tr><td>12:42</td><td class="amt out">52 037</td><td class="mono">TG3kd…geyZG</td><td><a href="https://tronscan.org/#/transaction/df29efa4b74060e6dd54fc9044e612a9848b1f5621cce93a4b261c9c2d1df4cf" target="_blank">tx ↗</a></td></tr>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Конечный узел</h2>
+    <div class="card">
+      <p><span class="tag">Адрес</span> <span class="mono">TZG47zhb8kcriWQ2rE719yHs1KqgzwMrvF</span> · <a href="https://tronscan.org/#/address/TZG47zhb8kcriWQ2rE719yHs1KqgzwMrvF" target="_blank">tronscan ↗</a></p>
+      <ul>
+        <li>Все три выводных адреса перевели сюда ≈<b>164 000 USDT</b> (+ 2 ветки по 40 000).</li>
+        <li>Баланс на момент анализа <b>~7,26 млн USDT</b>; оборот ~8M IN / 1,5M OUT за сутки; веерная раздача по множеству адресов.</li>
+        <li>Поведение характерно для <b>OTC / обменника / nesting-сервиса</b> — не личный кошелёк. Точная атрибуция (биржа / частный OTC) требует Tronscan/Arkham-метки.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Путь возврата</h2>
+    <div class="rec">
+      <div class="card"><h3>1 · Tether freeze</h3><p>По запросу правоохранителей Tether может заморозить USDT на адресе. Самый прямой рычаг для TRC20.</p></div>
+      <div class="card"><h3>2 · Киберполиция</h3><p>Заявление с хешами транзакций и указанием конечного сервиса. Через него — официальный запрос на KYC/заморозку.</p></div>
+      <div class="card"><h3>3 · Compliance сервиса</h3><p>Если конечный узел опознаётся как биржа — прямой запрос в их fraud/compliance с хешами.</p></div>
+    </div>
+    <div class="note" style="margin-top:12px"><b>Окно узкое.</b> Конечный узел активен прямо сейчас, средства размываются. Возврат реален только формальным путём и в ближайшие часы–дни.</div>
+  </section>
+
+  <footer>
+    Подготовлено в рамках on-chain расследования. Все данные — публичный блокчейн TRON. Документ обезличен.<br>
+    <b>Vistarian Consulting</b> · on-chain investigations · 2026-05-22
+  </footer>
+
+</div>
+</body>
+</html>
