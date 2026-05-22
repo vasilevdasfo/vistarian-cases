@@ -262,10 +262,23 @@ footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:v
   </section>
 
   <footer>
+    <span style="color:var(--muted)">👁 Просмотров: <b id="views" style="color:var(--blue)">…</b></span><br>
     Подготовлено в рамках on-chain расследования. Все данные — публичный блокчейн TRON. Документ обезличен.<br>
     <b>Vistarian Consulting</b> · on-chain investigations · 2026-05-22
   </footer>
 
 </div>
+<script>
+(async function(){
+  var NS='vistarian-cases-v1';
+  try{
+    var r=await fetch('https://abacus.jasoncameron.dev/hit/'+NS+'/total');
+    var d=await r.json();
+    var el=document.getElementById('views'); if(el) el.textContent=d.value;
+  }catch(e){ var el2=document.getElementById('views'); if(el2) el2.textContent='—'; }
+  var ref=new URLSearchParams(location.search).get('ref');
+  if(ref){ ref=ref.replace(/[^a-z0-9_-]/gi,'').slice(0,24); if(ref){ try{ fetch('https://abacus.jasoncameron.dev/hit/'+NS+'/ref-'+ref); }catch(e){} } }
+})();
+</script>
 </body>
 </html>
